@@ -1,0 +1,16 @@
+---
+Name: contactus
+---
+    
+SiteConfig:
+  extensions:
+    - ContactUsSiteConfigExtension
+
+
+Page:
+  extensions:
+    - ContactUsPageDataExtension
+
+Page_Controller:
+  extensions:
+    - ContactUsPageControllerExtension
