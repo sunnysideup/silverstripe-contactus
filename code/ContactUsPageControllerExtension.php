@@ -3,6 +3,10 @@
 class ContactUsPageControllerExtension extends Extension
 {
 
+    private static $allowed_actions = array(
+        'ContactUsForm' => true,
+        'docontactusform' => true
+    );
 
     protected $contactUsProcessingForm = false;
 
@@ -43,7 +47,7 @@ class ContactUsPageControllerExtension extends Extension
 
     function docontactusform ($data, $form)
     {
-        $obj = PageEnquiry::create_enquiry($data, $this->owner->dataRecord);
+        $obj = ContactUsFormEntry::create_enquiry($data, $this->owner->dataRecord);
         $subject = _t('ContactUsPageControllerExtension.THANK_YOU_SUBJECT', 'Thank you for your enquiry').' - '.Director::absoluteBaseURL();
         $body = "<strong>$subject</strong><br /><br />";
         foreach($data as $key => $value) {
