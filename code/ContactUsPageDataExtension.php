@@ -22,14 +22,16 @@ class ContactUsPageDataExtension extends Extension
         $fieldLabels = $this->owner->FieldLabels();
         $label = $fieldLabels['ContactUsFormEntries'];
         $fields->addFieldToTab(
-            'Root.Enquiries',
+            'Root.ContactForm',
             GridField::create(
                 'ContactUsFormEntries',
                 $label,
                 $this->owner->ContactUsFormEntries(),
-                GridFieldConfig_RelationEditor::create()
+                $config = GridFieldConfig_RelationEditor::create()
             )
         );
+        $config->removeComponentsByType('GridFieldAddExistingAutocompleter');
+        $config->removeComponentsByType('GridFieldDeleteAction');
 
         return $fields;
     }

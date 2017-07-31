@@ -2,7 +2,7 @@
 
 class ContactUsFormEntry extends DataObject
 {
-    
+
     private static $db = array(
         'Email' => 'Varchar',
         'FirstName' => 'Varchar',
@@ -75,7 +75,7 @@ class ContactUsFormEntry extends DataObject
     );
 
     public function canCreate($member = null) {
-        return parent::canCreate($member);
+        return false;
     }
 
     public function canDelete($member = null) {
