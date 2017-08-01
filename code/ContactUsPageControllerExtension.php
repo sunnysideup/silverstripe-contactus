@@ -21,7 +21,7 @@ class ContactUsPageControllerExtension extends Extension
             $m = new Member();
         }
         $fields = new FieldList(
-            TextField::create('FirstName',_t('ContactUsPageControllerExtension.FIRST_NAME', 'first name'), $m->FirstName),
+            TextField::create('FirstName',_t('ContactUsPageControllerExtension.FIRST_NAME', 'First Name'), $m->FirstName),
             TextField::create('Surname', _t('ContactUsPageControllerExtension.SURNAME', 'Surname'), $m->Surname),
             EmailField::create('Email',_t('ContactUsPageControllerExtension.EMAIL', 'Email'), $m->Email),
             TextField::create('Phone', _t('ContactUsPageControllerExtension.PHONE', 'Phone')),
