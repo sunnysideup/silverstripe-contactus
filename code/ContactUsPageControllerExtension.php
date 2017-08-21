@@ -63,7 +63,7 @@ class ContactUsPageControllerExtension extends Extension
                 $value = Director::absoluteURL($value);
                 $value = trim($value, "ContactUsForm");
             }
-            if($key == "SecurityID" || $key == "Send" || $key == "Captcha") {
+            if($key == "SecurityID" || $key == "Send" || $key == "Captcha" || $key == 'action_docontactusform') {
                 //do nothing
             }else {
                 $body .=  "<br /><br />".$key.': '.strip_tags($value).'';
