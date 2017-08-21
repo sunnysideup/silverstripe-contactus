@@ -47,6 +47,7 @@ class ContactUsPageControllerExtension extends Extension
 
     function docontactusform ($data, $form)
     {
+        $data = Convert::raw2sql($data);
         $obj = ContactUsFormEntry::create_enquiry($data, $this->owner->dataRecord);
         $subject = _t('ContactUsPageControllerExtension.THANK_YOU_SUBJECT', 'Thank you for your enquiry').' - '.Director::absoluteBaseURL();
         $body = "<strong>$subject</strong><br /><br />";
@@ -57,22 +58,23 @@ class ContactUsPageControllerExtension extends Extension
             if($key == "SecurityID" || $key == "Send" || $key == "Captcha") {
                 //do nothing
             }else {
-                $body .=  "<br /><br />".$key.': '.strip_tags($value).' --- ';
+                $body .=  "<br /><br />".$key.': '.strip_tags($value).'';
             }
         }
-        $adminEmail = SiteConfig::current_site_config()->ContactUsEmail;
-
+        $adminEmailAddress = SiteConfig::current_site_config()->ContactUsEmail;
+        $customerEmailAddress = $data["Email"];
         $email = Email::create(
-            $from = $data["Email"],
+            $from = $customerEmailAddress,
             $to = $adminEmail,
             $subject,
             $body
         );
         $obj->SentToAdmin = $email->send();
+        $obj->AdminEmail = $adminEmailAddress;
 
         $email = Email::create(
             $from = $adminEmail,
-            $to = $data["Email"],
+            $to = $customerEmailAddress,
             $subject,
             $body
         );

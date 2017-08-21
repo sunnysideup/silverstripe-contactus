@@ -4,10 +4,11 @@ class ContactUsFormEntry extends DataObject
 {
 
     private static $db = array(
-        'Email' => 'Varchar',
-        'FirstName' => 'Varchar',
-        'Surname' => 'Varchar',
-        'Phone' => 'Varchar',
+        'AdminEmail' => 'Varchar(255)',
+        'Email' => 'Varchar(255)',
+        'FirstName' => 'Varchar(255)',
+        'Surname' => 'Varchar(255)',
+        'Phone' => 'Varchar(255)',
         'Enquiry' => 'Text',
         'Data' => 'Text',
         'Responded' => 'Boolean',
@@ -23,28 +24,28 @@ class ContactUsFormEntry extends DataObject
         'NiceData' => 'HTMLText'
     );
 
-    public static function create_enquiry($data, $page)
+    public static function create_enquiry($sqlSafeData, $page)
     {
         $obj = ContactUsFormEntry::create(
             array(
-                'Email'=> Convert::raw2sql($data['Email']),
-                'FirstName' => Convert::raw2sql($data['FirstName']),
-                'Surname' => Convert::raw2sql($data['Surname']),
-                'Phone' => Convert::raw2sql($data['Phone']),
-                'Enquiry' => Convert::raw2sql($data['Enquiry']),
+                'Email'=> ($sqlSafeData['Email']),
+                'FirstName' => ($sqlSafeData['FirstName']),
+                'Surname' => ($sqlSafeData['Surname']),
+                'Phone' => ($sqlSafeData['Phone']),
+                'Enquiry' => ($sqlSafeData['Enquiry']),
                 //data is a backup for any additional fields in the form...
                 "PageID" => $page->ID
             )
         );
-        unset($data['url']);
-        unset($data['action_docontactusform']);
-        unset($data['SecurityID']);
-        unset($data['Enquiry']);
-        unset($data['Phone']);
-        unset($data['FirstName']);
-        unset($data['Surname']);
-        unset($data['Email']);
-        $obj->Data = serialize($data);
+        unset($sqlSafeData['url']);
+        unset($sqlSafeData['action_docontactusform']);
+        unset($sqlSafeData['SecurityID']);
+        unset($sqlSafeData['Enquiry']);
+        unset($sqlSafeData['Phone']);
+        unset($sqlSafeData['FirstName']);
+        unset($sqlSafeData['Surname']);
+        unset($sqlSafeData['Email']);
+        $obj->Data = serialize($sqlSafeData);
         $obj->write();
 
         return $obj;
@@ -65,7 +66,8 @@ class ContactUsFormEntry extends DataObject
     );
 
     private static $summary_fields = array(
-        'Email' => 'Email',
+        'Email' => 'From',
+        'AdminEmail' => 'To',
         'Created' => 'Created',
         'SentToAdmin.Nice' => 'Sent to Admin',
         'SentToCustomer.Nice' => 'Sent to Customer',
