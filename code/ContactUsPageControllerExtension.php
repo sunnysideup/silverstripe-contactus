@@ -61,11 +61,11 @@ class ContactUsPageControllerExtension extends Extension
                 $body .=  "<br /><br />".$key.': '.strip_tags($value).'';
             }
         }
-        $adminEmailAddress = SiteConfig::current_site_config()->ContactUsEmail;
+        $adminEmailAddress = SiteConfig::current_site_config()->ContactUsFormEmail;
         $customerEmailAddress = $data["Email"];
         $email = Email::create(
             $from = $customerEmailAddress,
-            $to = $adminEmail,
+            $to = $adminEmailAddress,
             $subject,
             $body
         );
@@ -73,7 +73,7 @@ class ContactUsPageControllerExtension extends Extension
         $obj->AdminEmail = $adminEmailAddress;
 
         $email = Email::create(
-            $from = $adminEmail,
+            $from = $adminEmailAddress,
             $to = $customerEmailAddress,
             $subject,
             $body

@@ -76,6 +76,11 @@ class ContactUsFormEntry extends DataObject
         'Page.Title' => 'Page'
     );
 
+    private static $field_labes = array(
+        'Email' => 'From',
+        'AdminEmail' => 'To'
+    );
+
     public function canCreate($member = null) {
         return false;
     }
