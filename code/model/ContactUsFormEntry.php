@@ -97,6 +97,7 @@ class ContactUsFormEntry extends DataObject
                 LiteralField::create('NiceData', $this->getNiceData())
          );
         $fixedFields = array(
+            'AdminEmail',
             'SentToCustomer',
             'SentToAdmin',
             'FirstName',

@@ -60,7 +60,8 @@ class ContactUsPageControllerExtension extends Extension
         $body = "<strong>$subject</strong><br /><br />";
         foreach($data as $key => $value) {
             if($key == "url") {
-                $value = Director::absoluteURL(str_replace("MyContactUsForm", "", $value));
+                $value = Director::absoluteURL($value);
+                $value = trim($value, "ContactUsForm");
             }
             if($key == "SecurityID" || $key == "Send" || $key == "Captcha") {
                 //do nothing
