@@ -3,6 +3,8 @@
 class ContactUsPageControllerExtension extends Extension
 {
 
+    private static $add_placeholders = false;
+
     private static $allowed_actions = array(
         'ContactUsForm' => true,
         'docontactusform' => true
@@ -27,6 +29,11 @@ class ContactUsPageControllerExtension extends Extension
             TextField::create('Phone', _t('ContactUsPageControllerExtension.PHONE', 'Phone')),
             TextareaField::create('Enquiry', SiteConfig::current_site_config()->ContactUsFormEnquiryLabel)
         );
+        if(Config::inst()->get('ContactUsPageControllerExtension', 'add_placeholders')) {
+            foreach($fields as $field) {
+                $field->setAttribute('placeholder', $field->Title());
+            }
+        }
         $actions = FieldList::create(
             FormAction::create('docontactusform', SiteConfig::current_site_config()->ContactUsFormSendLabel)
         );
@@ -53,7 +60,7 @@ class ContactUsPageControllerExtension extends Extension
         $body = "<strong>$subject</strong><br /><br />";
         foreach($data as $key => $value) {
             if($key == "url") {
-                $value = Director::absoluteURL(str_replace("ContactUsForm", "", $value));
+                $value = Director::absoluteURL(str_replace("MyContactUsForm", "", $value));
             }
             if($key == "SecurityID" || $key == "Send" || $key == "Captcha") {
                 //do nothing
